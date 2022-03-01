@@ -14,7 +14,7 @@ requires-python = ">=3.8"
 license = {text = "MIT"}
 
 [project.urls]
-Homepage = ""
+Homepage = "https://github.com/plathanus-tech/django-brazilian-zipcode"
 
 [project.optional-dependencies]
 [tool]
@@ -24,6 +24,7 @@ dev = [
     "pytest>=7.0.1",
     "pytest-mock>=3.7.0",
     "tox>=3.24.5",
+    "twine==3.8.0",
 ]
 
 [build-system]
