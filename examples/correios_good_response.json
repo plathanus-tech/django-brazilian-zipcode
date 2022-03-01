@@ -1,0 +1,26 @@
+{
+  "erro": false,
+  "mensagem": "DADOS ENCONTRADOS COM SUCESSO.",
+  "total": 1,
+  "dados": [
+    {
+      "uf": "UF",
+      "localidade": "Localidade",
+      "locNoSem": "",
+      "locNu": "",
+      "localidadeSubordinada": "",
+      "logradouroDNEC": "Logradouro",
+      "logradouroTextoAdicional": "",
+      "logradouroTexto": "",
+      "bairro": "Bairro",
+      "baiNu": "",
+      "nomeUnidade": "",
+      "cep": "00000000",
+      "tipoCep": "",
+      "numeroLocalidade": "",
+      "situacao": "",
+      "faixasCaixaPostal": [],
+      "faixasCep": []
+    }
+  ]
+}

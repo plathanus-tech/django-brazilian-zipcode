@@ -1,0 +1,8 @@
+
+.pdm.toml
+__pypackages__
+
+dist
+
+**/__pycache__/
+.tox/
