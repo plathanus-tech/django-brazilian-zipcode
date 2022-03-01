@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "requests>=2.27.1",
-    "django==3.2",
+    "django>=3.2",
     "djangorestframework>=3.13.1",
 ]
 requires-python = ">=3.8"
@@ -15,6 +15,7 @@ license = {text = "MIT"}
 
 [project.urls]
 Homepage = "https://github.com/plathanus-tech/django-brazilian-zipcode"
+download_url = "https://github.com/plathanus-tech/django-brazilian-zipcode/releases/tag/v0.1.0"
 
 [project.optional-dependencies]
 [tool]
