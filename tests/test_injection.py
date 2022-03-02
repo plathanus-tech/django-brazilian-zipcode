@@ -21,7 +21,7 @@ class FakeSettings:
 
 
 def test_with_settings_returns_desired_class(mocker: MockerFixture):
-    mocker.patch("brazilian_address.injection.settings", FakeSettings)
+    mocker.patch("brazilian_zipcode.injection.settings", FakeSettings)
     Parser = get_address_parser()
     assert Parser is TestParser
 
@@ -37,6 +37,6 @@ class FakeSettingsParserNoMethod:
 def test_with_settings_parser_without_get_address_info_raises_assertion_error(
     mocker: MockerFixture,
 ):
-    mocker.patch("brazilian_address.injection.settings", FakeSettingsParserNoMethod)
+    mocker.patch("brazilian_zipcode.injection.settings", FakeSettingsParserNoMethod)
     with pytest.raises(AssertionError):
         get_address_parser()

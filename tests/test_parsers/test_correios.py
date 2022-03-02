@@ -20,7 +20,7 @@ class FakeRequests:
 
 def test_invalid_zipcode_raises_validation_error(mocker: MockerFixture):
     mocker.patch(
-        "brazilian_address.parsers.correios.requests",
+        "brazilian_zipcode.parsers.correios.requests",
         FakeRequests("examples/correios_bad_response.json"),
     )
     with pytest.raises(ValidationError):
@@ -31,7 +31,7 @@ def test_valid_zipcode_not_raises_validation_error(
     mocker: MockerFixture, valid_zipcode
 ):
     mocker.patch(
-        "brazilian_address.parsers.correios.requests",
+        "brazilian_zipcode.parsers.correios.requests",
         FakeRequests("examples/correios_good_response.json"),
     )
     CorreiosParser.get_address_info(valid_zipcode)
@@ -39,7 +39,7 @@ def test_valid_zipcode_not_raises_validation_error(
 
 def test_valid_zipcode_returns_correct_type(mocker: MockerFixture, valid_zipcode):
     mocker.patch(
-        "brazilian_address.parsers.correios.requests",
+        "brazilian_zipcode.parsers.correios.requests",
         FakeRequests("examples/correios_good_response.json"),
     )
     address = CorreiosParser.get_address_info(valid_zipcode)

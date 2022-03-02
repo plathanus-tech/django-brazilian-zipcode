@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "requests>=2.27.1",
-    "django>=3.2",
+    "django>=3.2,<4.0",
     "djangorestframework>=3.13.1",
 ]
 requires-python = ">=3.8"
