@@ -24,23 +24,36 @@ class YourForm(forms.Form):
 
 ```python
 # your_app/views.py
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from brazilian_zipcode import BrazilianAddress
 from your_app.forms import YourForm
 
 
 def your_view(request: HttpRequest):
     form = YourForm(data=request.POST)
-    form.is_valid(raise_exception=True)
+    if not form.is_valid():
+        return HttpResponse(status=400)
 
-    form.zipcode_info # This attr is an instance of: `BrazilianAddress`
-    print(form.zipcode_info.street)
-    print(form.zipcode_info.zipcode)
-    print(form.zipcode_info.district)
-    print(form.zipcode_info.city)
-    print(form.zipcode_info.state_initials)
+    zipcode_info = form.cleaned_date.get("zipcode_info")
+    print(zipcode_info.street)
+    print(zipcode_info.zipcode)
+    print(zipcode_info.district)
+    print(zipcode_info.city)
+    print(zipcode_info.state_initials)
     
+    return HttpResponse(status=200)
+```
+
+```python
+# your_app/urls.py
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
     ...
+    path('your_view/', views.your_view)
+]
 ```
 
 ### As an API
@@ -75,9 +88,70 @@ That returns a `JSON` like:
 
 If the service is unavailable, you may receive a 404 response.
 
+
+### As an Widget (Requires the API step)
+
+You can use this widget to automatically show the address on the admin using the widget `AutoBrazilianZipCodeInput`.
+After the user inputs the zipcode, it will make an get request to the API endpoint and displays the result directly on the admin.
+Follow these steps:
+
+1; Create your form:
+
+```python
+# your_app.forms.py
+
+from django import forms
+from brazilian_zipcode import BrazilianZipCodeField
+from brazilian_zipcode.widgets import AutoBrazilianZipCodeInput
+from your_app.models import YourModel
+
+
+class MyAddressForm(forms.ModelForm):
+    # Here we used ModelForm, but you can use any other form.
+
+    zipcode_info = BrazilianZipCodeField(widget=AutoBrazilianZipCodeInput())
+
+    class Meta:
+        model = YourModel
+        fields = ['zipcode_info']
+
+```
+
+2; Set the widget on the field:
+
+```python
+# your_app.forms.py
+
+class MyAddressForm(forms.ModelForm):
+    # Here we used ModelForm, but you can use any other form.
+
+    zipcode_info = BrazilianZipCodeField(widget=AutoBrazilianZipCodeInput())
+    # You can also use any other CharField you like
+```
+
+3; Set the form on the admin:
+
+```python
+# your_app.admin.py
+
+from django.contrib import admin
+from .models import Address
+from .forms import MyAddressForm
+
+# Register your models here.
+@admin.register(Address)
+class MyAdressAdmin(admin.ModelAdmin):
+    form = MyAddressForm
+
+```
+
+4; Collect the required JavaScript:
+> python3 manage.py collectstatic
+
 ### Writing your own Address Retrieve Service
 
-To provide your own service for retrieving addresses, you should:
+You can also provide your custom service for retrieving addresses. This will be used on all use cases stated above.
+To do so you should:
 
 1; Create a Class that implements an `classmethod` called `get_address_info`:
 
@@ -124,3 +198,6 @@ class YourAddressRetrievingService:
 ADDRESS_PARSER_CLASS = "your_app.module.YourAddressRetrievingService"
 
 ```
+
+
+Enjoy! :D
