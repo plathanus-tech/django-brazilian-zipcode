@@ -23,22 +23,28 @@ function createReadOnlyInput(label, value) {
     const parentDiv = input.parentNode.parentNode.parentNode;
     
     removeReadOnlyInput(label);
-    const div = document.createElement("div");
-    div.classList.add("form-row");
-    div.setAttribute("meta-id", label)
+    const externalDiv = document.createElement("div");
+    externalDiv.classList.add("form-row");
+    externalDiv.setAttribute("meta-id", label)
+
+
+    const innerDiv = document.createElement("div");
+    innerDiv.classList.add("input-field");
 
     const valueDiv = document.createElement("div");
-    const labelElement = document.createElement("label");
+    const labelDiv = document.createElement("div");
+    labelDiv.classList.add("readonly-label");
 
+    const labelElement = document.createElement("label");
     labelElement.innerText = label + ":";
-    labelElement.classList.add("required");
-    div.appendChild(labelElement);
+    innerDiv.appendChild(labelElement);
 
     valueDiv.classList.add("readonly");
     valueDiv.innerText = value;
-    div.appendChild(valueDiv);
+    innerDiv.appendChild(valueDiv);
 
-    parentDiv.appendChild(div);
+    externalDiv.appendChild(innerDiv)
+    parentDiv.appendChild(externalDiv);
 }
 
 function getAddressInfo(zipcode) {
@@ -83,6 +89,6 @@ function handleOnFocusOutEvent(event) {
 
 
 $(document).ready(function () {
-    const input = document.querySelector(zipcodeMetaId);
+    const input = document.querySelector(zipcodeSelector);
     input.addEventListener("focusout", handleOnFocusOutEvent)
 });
